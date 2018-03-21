@@ -1,11 +1,6 @@
 package com.github.ji4597056;
 
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
@@ -18,6 +13,7 @@ public class ConsistentHashingWithVirtualNode {
 
     /**
      * virtual server node suffix
+     * eg:real_node("127.0.0.1"),virtual_nodes("127.0.0.1##0","127.0.0.1##1"...)
      */
     private static final String VIRTUAL_SERVER_NODE_SUFFIX = "##";
 
@@ -57,9 +53,9 @@ public class ConsistentHashingWithVirtualNode {
      */
     private void init() {
         REAL_SERVER_NODES.forEach(node -> IntStream.range(0, virtualNodesNum)
-            .forEach(index -> VIRTUAL_SERVER_NODES
-                .put(hash.getHash(getVirtualNodeKey(node, index)),
-                    getVirtualNodeKey(node, index))));
+                .forEach(index -> VIRTUAL_SERVER_NODES
+                        .put(hash.getHash(getVirtualNodeKey(node, index)),
+                                getVirtualNodeKey(node, index))));
     }
 
     /**
@@ -89,8 +85,8 @@ public class ConsistentHashingWithVirtualNode {
     public void addServerNode(String serverNode) {
         REAL_SERVER_NODES.add(serverNode);
         IntStream.range(0, virtualNodesNum).forEach(index -> VIRTUAL_SERVER_NODES
-            .put(hash.getHash(getVirtualNodeKey(serverNode, index)),
-                getVirtualNodeKey(serverNode, index)));
+                .put(hash.getHash(getVirtualNodeKey(serverNode, index)),
+                        getVirtualNodeKey(serverNode, index)));
     }
 
     /**
@@ -101,7 +97,7 @@ public class ConsistentHashingWithVirtualNode {
     public void removeServerNode(String serverNode) {
         REAL_SERVER_NODES.remove(serverNode);
         IntStream.range(0, virtualNodesNum).forEach(index -> VIRTUAL_SERVER_NODES
-            .remove(hash.getHash(getVirtualNodeKey(serverNode, index))));
+                .remove(hash.getHash(getVirtualNodeKey(serverNode, index))));
     }
 
     /**
@@ -126,7 +122,7 @@ public class ConsistentHashingWithVirtualNode {
      * get virtual node key
      *
      * @param realNodeKey real node
-     * @param index index
+     * @param index       index
      * @return virtual node
      */
     private String getVirtualNodeKey(String realNodeKey, int index) {

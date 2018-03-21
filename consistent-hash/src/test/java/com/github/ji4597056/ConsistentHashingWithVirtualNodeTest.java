@@ -33,7 +33,6 @@ public class ConsistentHashingWithVirtualNodeTest {
 
     @Test
     public void testHashStrategy() {
-        // result:fnv hash算法性能优于murmur hash算法
         IntStream.range(0, 5).forEach(i -> {
             System.out.println("=========fnv hash=========");
             printGetServer(100, 500000);
