@@ -6,6 +6,7 @@
 
   <groupId>com.github.ji4597056</groupId>
   <artifactId>algorithm-application</artifactId>
+  <packaging>pom</packaging>
   <version>1.0.0</version>
 
   <properties>
